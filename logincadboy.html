@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Siswa</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #4facfe, #00f2fe);
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 400px;
+      background: white;
+      margin: 50px auto;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .input-box {
+      margin-bottom: 15px;
+    }
+
+    .input-box label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    .input-box input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      background: #4facfe;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background: #2196f3;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    li {
+      margin-bottom: 10px;
+    }
+
+    a {
+      color: blue;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HALAMAN LOGIN -->
+  <div class="container" id="loginPage">
+    <h2>Login Siswa</h2>
+
+    <div class="input-box">
+      <label>Nama Siswa</label>
+      <input type="text" id="nama" placeholder="Masukkan nama">
+    </div>
+
+    <div class="input-box">
+      <label>Kelas</label>
+      <input type="text" id="kelas" placeholder="Masukkan kelas">
+    </div>
+
+    <button onclick="login()">Masuk</button>
+  </div>
+
+  <!-- HALAMAN DATA -->
+  <div class="container hidden" id="dataPage">
+    <h2>Data Yang Sudah Login</h2>
+
+    <p id="welcome"></p>
+
+    <ul id="listData"></ul>
+
+    <button onclick="kembali()">Kembali</button>
+  </div>
+
+  <script>
+    let dataLogin = [];
+
+    function login() {
+      let nama = document.getElementById("nama").value;
+      let kelas = document.getElementById("kelas").value;
+
+      if (nama === "" || kelas === "") {
+        alert("Isi nama dan kelas terlebih dahulu!");
+        return;
+      }
+
+      // simpan data
+      dataLogin.push({ nama, kelas });
+
+      // pindah halaman
+      document.getElementById("loginPage").classList.add("hidden");
+      document.getElementById("dataPage").classList.remove("hidden");
+
+      // tampilkan nama user
+      document.getElementById("welcome").innerHTML =
+        "Selamat datang, <b>" + nama + "</b>";
+
+      tampilkanData();
+
+      // reset form
+      document.getElementById("nama").value = "";
+      document.getElementById("kelas").value = "";
+    }
+
+    function tampilkanData() {
+      let list = document.getElementById("listData");
+      list.innerHTML = "";
+
+      dataLogin.forEach((item, index) => {
+        list.innerHTML += `
+          <li>
+            ${item.nama} - ${item.kelas}<br>
+            <a href="#">Link Login</a>
+          </li>
+        `;
+      });
+    }
+
+    function kembali() {
+      document.getElementById("dataPage").classList.add("hidden");
+      document.getElementById("loginPage").classList.remove("hidden");
+    }
+  </script>
+
+</body>
+</html>
